@@ -22,7 +22,6 @@ function Header() {
     // <HeaderProfile/>
     // </>
     <Box sx={{ flexGrow: 1 }}>
-
       <AppBar position="static" sx={{backgroundColor:'grey'}}>
         <Toolbar>
           <HeaderLogo/>
