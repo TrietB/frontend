@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import React from 'react'
-import Button from '../../components/game/Button'
+import Game from '../../components/game'
 import MenuCard from './MenuCard'
 
 
@@ -20,7 +20,7 @@ function Sidebar() {
   return (
     <Box sx={styled}>
     <MenuCard/>
-    <Button/>
+    <Game/>
     </Box>
   )
 }
