@@ -5,12 +5,9 @@ import { toggleChecked } from "../../features/gameSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import StartView from "./StartView";
+import GameView from "./GameView";
 
-const data = {
-  letters: "abcdefghijklmnopqrstuvwxyz".split(""),
-  numbers: "0123456789".split(""),
-  symbols: "<>;'\"[]{}+=()&%$#@!_-*:.,`?".split(""),
-};
+
 
 function Game() {
   const [currentView, setCurrentView] = useState("StartView");
@@ -42,13 +39,19 @@ function Game() {
 
   return (
     <>
-      <StartView 
+      {/* <StartView 
         textOptions={textOptions}
         selectedTextOptions = {selectedTextOptions}
         spawnRate={spawnRate}
         onGameStart={handleGameStart}
         hardcore={hardcore}
-        />
+        /> */}
+      <GameView
+        textOptions={textOptions}
+        spawnRate={spawnRate}
+        handleGameOver={handleGameOver}
+        hardcore={hardcore}
+      />
     </>
   );
 }
