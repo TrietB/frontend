@@ -31,26 +31,14 @@
   font-size: 1.3rem;
   cursor: pointer;
   transition: 0.25s;
-
 }
-.block-label input {
+.block-label input{
   display: none;
 }
 
-.block-label span {
+.block-label span{
   display: block;
   padding-left: 50px;
-}
-
-.block-label input:checked span {
-  font-size: 1.4rem;
-}
-.block-label input:checked span::before {
-  border-top: none;
-  border-left: none;
-  transform: rotate(45deg);
-  height: 20px;
-  top: -2px;
 }
 
 .block-label span::before{
@@ -63,6 +51,33 @@
       top: 5px;
       transition: 0.25s;
 }
+
+.block-label input:checked{
+  font-size: 1.4rem;
+}
+
+.block-label input:checked::before{
+  border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+      height: 20px;
+      top: -2px;
+}
+
+
+.block-label span {
+  font-size: 1.4rem;
+}
+
+.block-label span::before {
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+  height: 20px;
+  top: -2px;
+}
+
+
 
 
 .animated-header{

@@ -19,30 +19,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   difficulty: [
-    { id: 1, name: 'faster', },
-    { id: 2, name:'fast', },
-    { id: 3, name:'normal', },
-    { id: 4, name:'slow',  },
-    { id: 5, name:'slower', },
+    { id: 1, name: 'faster', isChecked: false },
+    { id: 2, name:'fast', isChecked: false},
+    { id: 3, name:'normal', isChecked: false },
+    { id: 4, name:'slow', isChecked: false  },
+    { id: 5, name:'slower', isChecked: false },
   ],
   selectedId: null,
 };
-
-// const nightmareMode = {
-//   nightmare: false,
-// };
-
-// const gameSlice = createSlice({
-//   name: "letterShooter",
-//   initialGameState,
-//   extraReducers: (builder) => {},
-// });
-
-// const textOptionsSlice = createSlice({
-//   name: "textOptions",
-//   initTextOptions,
-//   reducers: {},
-// });
 
 const difficultySlice = createSlice({
   name: "difficulty",

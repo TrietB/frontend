@@ -20,7 +20,6 @@ function Sidebar() {
   return (
     <Box sx={styled}>
     <MenuCard/>
-    <Game/>
     </Box>
   )
 }
