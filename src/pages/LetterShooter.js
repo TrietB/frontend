@@ -537,6 +537,7 @@ class GameView extends Component {
         }
         if (!val.active) {
           val.deathTimer++;
+          console.log(val.deathTimer)
         }
         if (val.deathTimer > 20) {
           val.remove = true;
@@ -548,6 +549,7 @@ class GameView extends Component {
         }
       });
       prevState.optionsPlaying = options;
+      console.log(prevState)
       return prevState;
     });
   };

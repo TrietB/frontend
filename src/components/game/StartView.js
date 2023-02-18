@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleChecked } from "../../features/gameSlice";
+import { toggleChecked } from "../../features/startViewSlice";
 import {
   AnimatedHeader,
   Button,

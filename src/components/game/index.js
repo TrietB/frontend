@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 //redux
-import { toggleChecked } from "../../features/gameSlice";
+import { toggleChecked } from "../../features/startViewSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import StartView from "./StartView";
@@ -13,7 +13,7 @@ function Game() {
   const [currentView, setCurrentView] = useState("StartView");
   const [selectedTextOptions, setSelectedTextOptions] = useState([]);
   const [textOptions, setTextOptions] = useState(
-    ["letters", "numbers", "symbols"],
+    ["letters",],
   );
   const [spawnRate, setSpawnRate] = useState(20);
   const [hardcore, setHardcore] = useState(false);

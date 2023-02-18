@@ -20,8 +20,9 @@ function GameView(props) {
   options = [].concat.apply([], options)
   let gameTime = 0 
   let intSpeed = 50
+  spawnRate = intSpeed * spawnRate
   const [selectedCategories, setSelectedCategories] = useState(textOptions)
-  const [optionsPlaying, setOptionsPlaying] = useState([{}])
+  const [optionsPlaying, setOptionsPlaying] = useState([])
   const [speed, setSpeed] = useState(0.9)
   const [score, setScore] = useState(0)
   const [health, setHealth] = useState(100)
@@ -44,6 +45,7 @@ function GameView(props) {
       }
       setOptionsPlaying(prevState=> {
         prevState.push(item)
+        console.log(optionsPlaying)
       })
       options.splice(index, 1)
       return options
@@ -51,7 +53,6 @@ function GameView(props) {
   }
   
   const updatePosition = () => {
-    setOptionsPlaying(prevState =>{
       let options = []
       optionsPlaying.forEach((val)=>{
         if(val.active){
@@ -61,10 +62,11 @@ function GameView(props) {
           val.active = false
           val.deathTimer = 0
           val.hitHealth = true
-          setHealth(prevState => prevState -= 10)
+          setHealth(prevState => prevState -= 100)
         }
         if(!val.active){
-          val.deathTimer += 1
+          val.deathTimer++
+          // console.log(val.deathTimer)
         }
         if(val.deathTimer > 20){
           val.remove = true
@@ -76,8 +78,6 @@ function GameView(props) {
         }
       })
       setOptionsPlaying(options)
-      return options
-    })
   }
   
   const onGameOver = () => {
@@ -104,25 +104,28 @@ function GameView(props) {
   }
 
   const handleUserKeyInput = (e) => {
+    console.log('user input')
     let val = e.target.value.toLowerCase()
     let found = false
     optionsPlaying.forEach((el, index)=>{
       if(val === el.character && el.active){
         found = true
+        console.log('found')
         setOptionsPlaying(prevState => {
+          console.log(prevState)
           prevState[index].active = false
           prevState[index].deathTimer = 0
-          setScore(score++)
+          console.log(prevState)
+          setScore(prevState=> prevState++)
         })
+
       }
     })
     if(!found && hardcore){
       setHealth(prevState => prevState -= 10)
     }
-
     e.target.value = ''
   }
-
   let targets = optionsPlaying.map(val=> {
     const style = {
       position: "absolute",
@@ -155,7 +158,8 @@ function GameView(props) {
     overflow: "hidden",
     position: "relative",
     animation: "slide-in forwards .5s",
-    transition: ".5s"
+    transition: ".5s",
+    width: '100vw'
   };
 
   containerStyles.top = animatingOut ? "150vh" : "0";
@@ -163,8 +167,9 @@ function GameView(props) {
 
   
   useEffect(()=>{
-    interval = setInterval(gameInterval, intSpeed)
-  })
+   setInterval(gameInterval, intSpeed)
+   
+  },[])
   return (
     <div
         style={containerStyles}
