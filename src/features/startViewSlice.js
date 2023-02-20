@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
-import _, {without} from "underscore";
+// import _, {without} from "underscore";
 
 const initialState = {
   textOptions: [
@@ -8,7 +8,9 @@ const initialState = {
     { isSelected: false, option: "symbols" },
   ],
   // textOptions:["letters","numbers","symbols"],
-  selectedTextOptions: [],
+  selectedTextOptions: ["letters"],
+  speedOptions: ["Slower", "Slow", "Normal", "Fast", "Faster"],
+  selectedSpeedOption: 'Normal',
   spawnRate: 20,
   hardcore: false,
   animatingOut: false,
@@ -22,34 +24,50 @@ const startViewSlice = createSlice({
       let newValue = action.payload;
       // console.log(newValue)
       let arr = state.selectedTextOptions;
-      if(arr.indexOf(newValue) === -1){
-        arr.push(newValue)
-      } else if (arr.includes(newValue)){
-        console.log('match', newValue)
-        arr.slice(0, newValue-1).concat(arr.slice(newValue + 1))
-        console.log(current(arr))
+      if (arr.indexOf(newValue) === -1) {
+        arr.push(newValue);
+      } else if (arr.includes(newValue)) {
+        state.selectedTextOptions = state.selectedTextOptions.filter(
+          (option) => option !== newValue
+        );
       }
-    },
-    selectedId: (state, action) => {
-      state.selectedTextOptions.push(action.payload);
     },
     // either select or deselect this id
     // action.payload is the id
     toggleChecked: (state, action) => {
-      const isChecked = state.selectedTextOptions === action.payload;
+      state.textOptions.forEach((option) => {
+        if (option.option === action.payload.option) {
+          option.isSelected = !option.isSelected;
+        }
+      });
+    },
+    toggleHardcoreMode: (state, action) => {
+      state.hardcore = !state.hardcore;
+    },
+    selectedSpeed: (state, action) => {
+      state.selectedSpeedOption.push(action.payload);
+    },
+    toggleSpeedChecked: (state, action) => {
+      const isChecked = state.selectedSpeedOption === action.payload;
       if (isChecked) {
-        state.selectedId = null; // uncheck
+        state.selectedSpeedOption = null; // uncheck
       } else {
-        state.selectedId = action.payload; // check
+        state.selectedSpeedOption = action.payload; // check
       }
     },
-    // action.payload is an item with name and id properties
-    addItem: (state, action) => {
-      state.items.push(action.payload);
+    selectedSpawnRate: (state, action) => {
+      state.spawnRate = action.payload
+      // console.log(current(spawnRate))
     },
+    setAnimation: (state, action) => {
+      state.animatingOut = true
+      // console.log(current(state.animatingOut))
+    }
+
   },
 });
 
-export const { selectedTextType } = startViewSlice.actions;
+export const {animatingOut, selectedSpawnRate, selectedTextType, toggleChecked, toggleHardcoreMode, selectedSpeed, toggleSpeedChecked, setAnimation } =
+  startViewSlice.actions;
 
 export default startViewSlice.reducer;
