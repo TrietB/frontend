@@ -10,7 +10,7 @@ const initialState = {
   // textOptions:["letters","numbers","symbols"],
   selectedTextOptions: ["letters"],
   speedOptions: ["Slower", "Slow", "Normal", "Fast", "Faster"],
-  selectedSpeedOption: 'Normal',
+  selectedSpeedOption: "Normal",
   spawnRate: 20,
   hardcore: false,
   animatingOut: false,
@@ -56,18 +56,25 @@ const startViewSlice = createSlice({
       }
     },
     selectedSpawnRate: (state, action) => {
-      state.spawnRate = action.payload
+      state.spawnRate = action.payload;
       // console.log(current(spawnRate))
     },
     setAnimation: (state, action) => {
-      state.animatingOut = true
+      state.animatingOut = true;
       // console.log(current(state.animatingOut))
-    }
-
+    },
   },
 });
 
-export const {animatingOut, selectedSpawnRate, selectedTextType, toggleChecked, toggleHardcoreMode, selectedSpeed, toggleSpeedChecked, setAnimation } =
-  startViewSlice.actions;
+export const {
+  animatingOut,
+  selectedSpawnRate,
+  selectedTextType,
+  toggleChecked,
+  toggleHardcoreMode,
+  selectedSpeed,
+  toggleSpeedChecked,
+  setAnimation,
+} = startViewSlice.actions;
 
 export default startViewSlice.reducer;
