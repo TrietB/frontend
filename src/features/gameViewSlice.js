@@ -8,12 +8,12 @@ const initialState = {
   selectedCategories: "",
   options: [],
   optionsPlaying: [],
-  speed: 0,
+  speed: 10,
   score: 0,
   health: 100,
   animatingOut: false,
   gameTime: 0,
-  intSpeed: 50
+  intSpeed: 50,
 };
 
 const data = {
@@ -28,7 +28,7 @@ const gameViewSlice = createSlice({
   reducers: {
     updateOptions: (state, actions) => {
       const charType = actions.payload;
-      charType.map((type) => {
+      charType.forEach((type) => {
         if (data[type]) {
           state.options.push(data[type]);
           state.options = state.options.concat.apply([], state.options)
@@ -50,10 +50,41 @@ const gameViewSlice = createSlice({
       }
 
     },
-  },
+    updatePositions: (state, action) => {
+      let options = []
+      state.optionsPlaying.forEach((val)=> {
+        if(val.active){
+          val.yPosition += state.speed
+        }
+        if(val.yPosition > 80 && val.active){
+          val.active = false
+          val.deathTimer = 0
+          val.hitHealth = true
+          state.health = state.health -= 10
+        }
+        if(!val.active){
+          val.deathTimer++
+          // console.log(val.deathTimer)
+        }
+        if(val.deathTimer > 20){
+          val.remove = true
+        }
+        if(val.remove){
+          options.push(val.character)
+        } else {
+          options.push(val)
+        }
+
+        state.optionsPlaying = options
+      })
+    },
+    setAnimationOut: (state, action) => {
+      state.animatingOut = false
+    }
+},
 });
 
 
-export const {addNewItem, updateOptions} = gameViewSlice.actions
+export const {addNewItem, updateOptions, updatePositions, setAnimationOut} = gameViewSlice.actions
 
 export default gameViewSlice.reducer;

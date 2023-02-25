@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewItem, updateOptions } from "../../features/gameViewSlice";
-import { HealthBar } from "./StyledComponents";
+import { addNewItem, setAnimationOut, updateOptions, updatePositions } from "../../features/gameViewSlice";
+import { HealthBar, ViewContainer } from "./StyledComponents";
 
 
 const data = {
@@ -49,14 +49,24 @@ function GameViewRedux() {
     }
   }
 
+  const onGameOver = () => {
+  }
+
 const gameInterval = () => {
+    if(health <= 0){
+      console.log('dead')
+      gameOver()
+    }
     if(gameTime % intSpeed === 0 ){
     dispatch(addNewItem())
     }
+    dispatch(updatePositions() )
 }
 
 const gameOver = ()=> {
     clearInterval(interval)
+    dispatch(setAnimationOut())
+
 }
 
 //   console.log(options)
@@ -74,7 +84,7 @@ let targets = optionsPlaying.map((val, i)=> {
       padding: ".5rem",
       transform: `translate(-50%,${val.yPosition}vh)`,
       transition: `${intSpeed}ms`,
-      fontColor: 'black'
+      // fontColor: 'black'
     }
     if (!val.active) {
       style.transform = `translate(-50%,${val.yPosition}vh) scale(2) rotate(360deg)`;
@@ -93,7 +103,7 @@ let targets = optionsPlaying.map((val, i)=> {
 
   let containerStyles = {
     padding: "0 1rem",
-    height: "100vw",
+    height: "1000px",
     overflow: "hidden",
     position: "relative",
     animation: "slide-in forwards .5s",
@@ -103,9 +113,10 @@ let targets = optionsPlaying.map((val, i)=> {
 
   containerStyles.top = animatingOut ? "150vh" : "0";
   containerStyles.background = animatingOut ? "#F46652" : "white";
+
   useEffect(()=>{
     dispatch(updateOptions(selectedTextOptions))
-    interval = setInterval(gameInterval, 5000)
+    interval = setInterval(gameInterval, 500)
   },[])
 
   return (
@@ -114,14 +125,14 @@ let targets = optionsPlaying.map((val, i)=> {
         onClick={() => {
           document.querySelector("input").focus();
         }}
-      >
-        {/* <h1>Score: {score}</h1> */}
+        >
+        <h1>Score:</h1>
         <input
           type="text"
           autoFocus
-        //   onChange={handleUserKeyInput}
+          //   onChange={handleUserKeyInput}
           style={{ opacity: 0, fontSize: "20px" }}
-        />
+          />
         {targets}
         <HealthBar width={health} />
     </div>
