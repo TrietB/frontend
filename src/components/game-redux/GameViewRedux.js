@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewItem, setAnimationOut, updateOptions, updatePositions } from "../../features/gameViewSlice";
+import { addNewItem, handleUserInput, setAnimationOut, updateOptions, updatePositions } from "../../features/gameViewSlice";
 import { HealthBar, ViewContainer } from "./StyledComponents";
 
 
@@ -22,7 +22,7 @@ function GameViewRedux() {
     animatingOut,
   } = useSelector((state) => state.startView);
 
-  const {options, optionsPlaying, gameTime, intSpeed, health} = useSelector((state)=> state.gameView)
+  const {options, optionsPlaying, gameTime, intSpeed, health, score} = useSelector((state)=> state.gameView)
 
   const dispatch = useDispatch()
 
@@ -51,6 +51,11 @@ function GameViewRedux() {
 
   const onGameOver = () => {
   }
+  const gameOver = ()=> {
+    clearInterval(interval)
+    dispatch(setAnimationOut(true))
+
+}
 
 const gameInterval = () => {
     if(health <= 0){
@@ -60,14 +65,21 @@ const gameInterval = () => {
     if(gameTime % intSpeed === 0 ){
     dispatch(addNewItem())
     }
-    dispatch(updatePositions() )
+    if(health > 0 ){
+      dispatch(updatePositions())
+    }
 }
 
-const gameOver = ()=> {
-    clearInterval(interval)
-    dispatch(setAnimationOut())
+const userKeyInput = (e) => {
+  let val = e.target.value.toLowerCase()
+  let found = false
 
+ dispatch(handleUserInput(val))
+
+ e.target.value = ''
+  
 }
+
 
 //   console.log(options)
 //   console.log(optionsPlaying)
@@ -126,11 +138,11 @@ let targets = optionsPlaying.map((val, i)=> {
           document.querySelector("input").focus();
         }}
         >
-        <h1>Score:</h1>
+        <h1>Score:{score}</h1>
         <input
           type="text"
           autoFocus
-          //   onChange={handleUserKeyInput}
+            onChange={userKeyInput}
           style={{ opacity: 0, fontSize: "20px" }}
           />
         {targets}

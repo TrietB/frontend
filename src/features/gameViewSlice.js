@@ -79,12 +79,23 @@ const gameViewSlice = createSlice({
       })
     },
     setAnimationOut: (state, action) => {
-      state.animatingOut = false
+      state.animatingOut = action.payload
+    },
+    handleUserInput: (state, action) => {
+      let val = action.payload
+
+      state.optionsPlaying.forEach((el, index)=> {
+        if(val === el.character && el.active){
+          state.optionsPlaying[index].active = false
+          state.optionsPlaying[index].deathTimer = 0
+          state.score = state.score + 1 || 0
+        }
+      })
     }
 },
 });
 
 
-export const {addNewItem, updateOptions, updatePositions, setAnimationOut} = gameViewSlice.actions
+export const {handleUserInput, addNewItem, updateOptions, updatePositions, setAnimationOut} = gameViewSlice.actions
 
 export default gameViewSlice.reducer;
